@@ -21,7 +21,7 @@ export default function Book(props: BookProps) {
         >
           <FontAwesomeIcon
             icon={faStar}
-            color={clsx(isFavorite === true ? "yellow" : "")}
+            color={clsx(isFavorite === true ? "#e1ad01" : "")}
           />
         </button>
       </div>
