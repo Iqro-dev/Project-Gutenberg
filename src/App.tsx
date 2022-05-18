@@ -1,9 +1,11 @@
-function App() {
+import Header from "./components/Header";
+import Books from "./components/Books";
+
+export default function App() {
   return (
-    <div className="bg-black">
-      <p className="text-red text-md">figbndriuygbfd</p>
+    <div>
+      <Header />
+      <Books />
     </div>
   );
 }
-
-export default App;
