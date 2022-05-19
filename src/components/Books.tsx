@@ -38,6 +38,7 @@ export default function Books() {
           <input
             type="text"
             onChange={handleChange}
+            onKeyUp={(e) => (e.key === "Enter" ? setQuery(state) : "")}
             onBlur={() => setQuery(state)}
             className="outline"
           />
@@ -46,13 +47,13 @@ export default function Books() {
           </button>
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center w-full h-full">
         <InfiniteScroll
           dataLength={results.length}
           next={() => setPageNumber(pageNumber + 1)}
           hasMore={true}
           loader={
-            <div className="flex flex-row gap-4 p-4">
+            <div className="flex flex-row gap-4 pt-12">
               <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
                 <circle
                   className="opacity-25"
@@ -73,7 +74,7 @@ export default function Books() {
           }
         >
           <div
-            className={`grid ${
+            className={`px-24 pt-12 grid ${
               results.length > 0 ? "grid-cols-4 medium:grid-cols-1" : ""
             } justify-center gap-8`}
           >
