@@ -2,16 +2,15 @@ import { useEffect, useState } from "react";
 import { Results } from "./Books";
 
 export function useSearch(
+  query: string,
   setResults: React.Dispatch<React.SetStateAction<Results[]>>,
   results: Results[],
   pageNumber: number,
   setCount: React.Dispatch<React.SetStateAction<number>>,
   count: number,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   const API_LINK = "https://gnikdroy.pythonanywhere.com/api/";
-  const [query, setQuery] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -21,7 +20,9 @@ export function useSearch(
         setResults([...r.results]);
         setCount(r.count);
         setLoading(false);
+        console.log(r.results);
       });
+    console.log("one");
   }, [query]);
 
   useEffect(() => {
@@ -34,6 +35,4 @@ export function useSearch(
         setLoading(false);
       });
   }, [pageNumber]);
-
-  return [setQuery];
 }

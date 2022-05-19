@@ -17,20 +17,22 @@ export default function Books() {
   const [pageNumber, setPageNumber] = useState(1);
   const [state, setState] = useState("");
   const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useState("");
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setState(e.target.value);
-  };
-
-  const [setQuery] = useSearch(
+  useSearch(
+    query,
     setResults,
     results,
     pageNumber,
     setCount,
     count,
-    setLoading,
-    loading
+    setLoading
   );
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setState(e.target.value);
+    console.log("handleChang");
+  };
 
   return (
     <div className="flex justify-center flex-col p-12 gap-12">
@@ -45,7 +47,7 @@ export default function Books() {
           <input
             type="text"
             onChange={handleChange}
-            onBlur={() => setQuery(state)}
+            // onBlur={() => setQuery(state)}
             className="outline"
           />
           <button onClick={() => setQuery(state)}>
