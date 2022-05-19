@@ -3,6 +3,7 @@ import Book from "./Book";
 import { useSearch } from "./BookSearch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export interface Results {
   title: string;
@@ -16,22 +17,12 @@ export default function Books() {
   const [count, setCount] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [state, setState] = useState("");
-  const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState("");
 
-  useSearch(
-    query,
-    setResults,
-    results,
-    pageNumber,
-    setCount,
-    count,
-    setLoading
-  );
+  useSearch(query, setResults, results, pageNumber, setCount);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setState(e.target.value);
-    console.log("handleChang");
   };
 
   return (
@@ -47,7 +38,7 @@ export default function Books() {
           <input
             type="text"
             onChange={handleChange}
-            // onBlur={() => setQuery(state)}
+            onBlur={() => setQuery(state)}
             className="outline"
           />
           <button onClick={() => setQuery(state)}>
@@ -56,15 +47,12 @@ export default function Books() {
         </div>
       </div>
       <div className="flex justify-center">
-        <div
-          className={`grid ${
-            results.length > 0 && loading === false
-              ? "grid-cols-4 medium:grid-cols-1"
-              : ""
-          } justify-center gap-8`}
-        >
-          {loading ? (
-            <div className="flex flex-row gap-4">
+        <InfiniteScroll
+          dataLength={results.length}
+          next={() => setPageNumber(pageNumber + 1)}
+          hasMore={true}
+          loader={
+            <div className="flex flex-row gap-4 p-4">
               <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
                 <circle
                   className="opacity-25"
@@ -82,8 +70,14 @@ export default function Books() {
               </svg>
               Loading...
             </div>
-          ) : (
-            results.map((r, index) => (
+          }
+        >
+          <div
+            className={`grid ${
+              results.length > 0 ? "grid-cols-4 medium:grid-cols-1" : ""
+            } justify-center gap-8`}
+          >
+            {results.map((r, index) => (
               <div key={index}>
                 <Book
                   title={r.title}
@@ -92,9 +86,9 @@ export default function Books() {
                   downloads={r.downloads}
                 />
               </div>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        </InfiniteScroll>
       </div>
     </div>
   );
