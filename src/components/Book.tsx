@@ -9,6 +9,7 @@ interface BookProps {
   description: string;
   languages: string;
   downloads: number;
+  id: number;
 }
 
 export default function Book(props: BookProps) {
@@ -44,7 +45,7 @@ export default function Book(props: BookProps) {
           </span>
           <div className="flex flex-col justify-self-end">
             <span className="text-md font-['Poppins'] font-normal">
-              Language: <span className="text-red-500">{props.languages}</span>
+              Languages: <span className="text-red-500">{props.languages}</span>
             </span>
             <span className="text-md font-['Poppins'] font-normal">
               Downloads:{" "}
@@ -54,7 +55,7 @@ export default function Book(props: BookProps) {
           <div className="flex">
             <Link
               className="inline-block w-[200px] border rounded-lg border-black text-sm capitalize px-4 py-2 cursor-pointer hover:text-white bg-gradient-to-r bg-no-repeat duration-300 from-black to-black bg-[length:0px] hover:bg-[length:100%]"
-              to="/"
+              to={`/book/${props.id}`}
             >
               Read...
             </Link>
