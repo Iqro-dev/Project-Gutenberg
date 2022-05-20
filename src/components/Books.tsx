@@ -49,9 +49,9 @@ export default function Books() {
       </div>
       <div className="flex justify-center w-full h-full">
         <InfiniteScroll
-          dataLength={results.length}
+          dataLength={count}
           next={() => setPageNumber(pageNumber + 1)}
-          hasMore={true}
+          hasMore={results.length >= count}
           loader={
             <div className="flex flex-row gap-4 pt-12">
               <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
