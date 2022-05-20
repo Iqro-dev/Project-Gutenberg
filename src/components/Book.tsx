@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 interface BookProps {
   title: string;
@@ -49,6 +50,14 @@ export default function Book(props: BookProps) {
               Downloads:{" "}
               <span className="text-green-500"> {props.downloads}</span>
             </span>
+          </div>
+          <div className="flex">
+            <Link
+              className="inline-block w-[200px] border rounded-lg border-black text-sm capitalize px-4 py-2 cursor-pointer hover:text-white bg-gradient-to-r bg-no-repeat duration-300 from-black to-black bg-[length:0px] hover:bg-[length:100%]"
+              to="/"
+            >
+              Read...
+            </Link>
           </div>
         </div>
       </div>

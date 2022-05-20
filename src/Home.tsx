@@ -1,10 +1,8 @@
-import Header from "./components/Header";
 import Books from "./components/Books";
 
-export default function App() {
+export default function Home() {
   return (
     <div className="w-full h-full">
-      <Header />
       <Books />
     </div>
   );
