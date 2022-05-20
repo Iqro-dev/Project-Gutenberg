@@ -8,11 +8,26 @@ import Header from "./components/Header";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
-    <Header />
     <Routes>
       <Route path="*" element={<>404</>} />
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
+      <Route
+        path="/"
+        element={
+          <>
+            <Header />
+            <Home />
+          </>
+        }
+      />
+      <Route
+        path="/about"
+        element={
+          <>
+            <Header />
+            <About />
+          </>
+        }
+      />
       <Route path="/book/:id" element={<BookRoute />} />
     </Routes>
   </BrowserRouter>

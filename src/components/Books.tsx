@@ -98,7 +98,7 @@ export default function Books() {
           }
         >
           <div
-            className={`px-24 pt-12 grid ${
+            className={`lg:px-24 pt-12 grid ${
               results.length > 0 ? "grid-cols-4 medium:grid-cols-1" : ""
             } justify-center gap-8`}
           >
