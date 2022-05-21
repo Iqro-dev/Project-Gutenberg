@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import Book from "./Book";
 import { useSearch } from "./BookSearch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,14 +13,39 @@ export interface Results {
   id: number;
 }
 
+export interface Langs {
+  name: string;
+}
+
 export default function Books() {
+  const API_LINK = "https://gnikdroy.pythonanywhere.com/api/";
   const [results, setResults] = useState<Results[]>([]);
   const [count, setCount] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [state, setState] = useState("");
   const [query, setQuery] = useState("");
+  const [langs, setLangs] = useState<Langs[]>([]);
+  const [langsPageNumber, setLangsPageNumber] = useState(1);
+  const [langCount, setLangCount] = useState(0);
 
   useSearch(query, setResults, results, pageNumber, setCount);
+
+  useEffect(() => {
+    fetch(API_LINK + "language")
+      .then((r) => r.json())
+      .then((r: { results: Langs[]; count: number }) => {
+        setLangs([...r.results]);
+        setLangCount(r.count);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch(API_LINK + `language?&page=${langsPageNumber}`)
+      .then((r) => r.json())
+      .then((r: { results: Langs[]; count: number }) => {
+        setLangs([...langs, ...r.results]);
+      });
+  }, [setLangsPageNumber]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setState(e.target.value);
@@ -56,8 +81,10 @@ export default function Books() {
             )}
           </span>
         </div>
+
         <div className="flex flex-row gap-2">
           <span>Search:</span>
+
           <input
             type="text"
             onChange={handleChange}
@@ -65,11 +92,22 @@ export default function Books() {
             onBlur={() => setQuery(state)}
             className="outline"
           />
+
           <button onClick={() => setQuery(state)}>
             <FontAwesomeIcon icon={faSearch} />
           </button>
+
+          <span>Language:</span>
+
+          <select>
+            {langs &&
+              langs.map((lang, index) => (
+                <option key={index}>{lang.name}</option>
+              ))}
+          </select>
         </div>
       </div>
+
       <div className="flex justify-center w-full h-full">
         <InfiniteScroll
           className="!overflow-hidden"
@@ -87,6 +125,7 @@ export default function Books() {
                   stroke="currentColor"
                   strokeWidth="4"
                 ></circle>
+
                 <path
                   className="opacity-75"
                   fill="currentColor"
