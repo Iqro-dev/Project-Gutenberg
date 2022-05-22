@@ -16,7 +16,7 @@ export default function Book(props: BookProps) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   return (
-    <div className="w-[20vw] medium:w-full h-[25vw] medium:h-full shadow-xl rounded-xl transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:cursor-pointer medium:pb-12">
+    <div className="md:w-[80vw] 2xl:w-full h-[25vw] medium:h-full shadow-xl rounded-xl transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:cursor-pointer medium:pb-12">
       <div className="flex justify-end p-4">
         <button
           onClick={() => {

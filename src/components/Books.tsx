@@ -85,29 +85,38 @@ export default function Books() {
           </span>
         </div>
 
-        <div className="flex flex-row gap-2">
-          <span>Search:</span>
+        <div className="flex flex-row flex-wrap gap-2">
+          <div className="flex flex-row gap-2">
+            <span>Search:</span>
 
-          <input
-            type="text"
-            onChange={handleChange}
-            onKeyUp={(e) => (e.key === "Enter" ? setQuery(state) : "")}
-            onBlur={() => setQuery(state)}
-            className="outline"
-          />
+            <input
+              type="text"
+              onChange={handleChange}
+              onKeyUp={(e) => (e.key === "Enter" ? setQuery(state) : "")}
+              onBlur={() => setQuery(state)}
+              className="outline"
+            />
 
-          <button onClick={() => setQuery(state)}>
-            <FontAwesomeIcon icon={faSearch} />
-          </button>
+            <button onClick={() => setQuery(state)}>
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
+          </div>
 
-          <span>Language:</span>
+          <div>
+            <span>Language:</span>
 
-          <select onChange={(e) => setLang(e.target.value)}>
-            {langs &&
-              langs.map((lang, index) => (
-                <option key={index}>{lang.name}</option>
-              ))}
-          </select>
+            <select
+              onChange={(e) =>
+                setLang(e.target.value === "all" ? "" : e.target.value)
+              }
+            >
+              <option>all</option>
+              {langs &&
+                langs.map((lang, index) => (
+                  <option key={index}>{lang.name}</option>
+                ))}
+            </select>
+          </div>
         </div>
       </div>
 
@@ -140,8 +149,10 @@ export default function Books() {
           }
         >
           <div
-            className={`lg:px-24 pt-12 grid ${
-              results.length > 0 ? "grid-cols-4 medium:grid-cols-1" : ""
+            className={`lg:px-24 px-4 py-12 grid ${
+              results.length > 0
+                ? "grid-cols-4 medium:grid-cols-1 medium:w-full"
+                : ""
             } justify-center gap-8`}
           >
             {results.map((r, index) => (
