@@ -7,26 +7,31 @@ export function useSearch(
   results: Results[],
   pageNumber: number,
   setCount: React.Dispatch<React.SetStateAction<number>>,
-  lang: string
+  lang: string,
+  downloadsMin: string,
+  downloadsMax: string
 ) {
   const API_LINK = "https://gnikdroy.pythonanywhere.com/api/";
 
   useEffect(() => {
     setResults([]);
+
     fetch(
       API_LINK +
-        `book?&title_contains=${query}&page=${pageNumber}&languages=${lang}`
+        `book?&title_contains=${query}&page=${pageNumber}&languages=${lang}&downloads_range_min=${downloadsMin}&downloads_range_max=${downloadsMax}`
     )
       .then((r) => r.json())
       .then((r: { results: Results[]; count: number }) => {
-        setResults([...r.results]);
+        setResults(r.results);
         setCount(r.count);
-        console.log(r.results);
       });
-  }, [query, lang]);
+  }, [query, lang, downloadsMin, downloadsMax]);
 
   useEffect(() => {
-    fetch(API_LINK + `book?&title_contains=${query}&page=${pageNumber}`)
+    fetch(
+      API_LINK +
+        `book?&title_contains=${query}&page=${pageNumber}&downloads_range_min=${downloadsMin}&downloads_range_max=${downloadsMax}`
+    )
       .then((r) => r.json())
       .then((r: { results: Results[]; count: number }) => {
         setResults([...results, ...r.results]);

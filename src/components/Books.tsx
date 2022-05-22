@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Book from "./Book";
 import { useSearch } from "./BookSearch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,8 +28,19 @@ export default function Books() {
   const [langs, setLangs] = useState<Langs[]>([]);
   const [next, setNext] = useState<string | null>("");
   const [lang, setLang] = useState("");
+  const [downloadsMin, setDownloadsMin] = useState("");
+  const [downloadsMax, setDownloadsMax] = useState("");
 
-  useSearch(query, setResults, results, pageNumber, setCount, lang);
+  useSearch(
+    query,
+    setResults,
+    results,
+    pageNumber,
+    setCount,
+    lang,
+    downloadsMin,
+    downloadsMax
+  );
 
   useEffect(() => {
     fetch(API_LINK + "language")
@@ -45,14 +56,9 @@ export default function Books() {
         .then((r) => r.json())
         .then((r: { results: Langs[]; next: string }) => {
           setLangs([...langs, ...r.results]);
-          setNext(r.next);
-          console.log(r.next);
+          if (r.next != null) setNext(r.next);
         });
   }, [next]);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setState(e.target.value);
-  };
 
   return (
     <div className="flex justify-center flex-col p-12 overflow-hidden gap-12">
@@ -91,9 +97,10 @@ export default function Books() {
 
             <input
               type="text"
-              onChange={handleChange}
-              onKeyUp={(e) => (e.key === "Enter" ? setQuery(state) : "")}
-              onBlur={() => setQuery(state)}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setState(e.target.value);
+              }}
               className="outline"
             />
 
@@ -117,6 +124,27 @@ export default function Books() {
                 ))}
             </select>
           </div>
+
+          <div className="flex flex-row gap-2">
+            <span>Downloads:</span>
+            <input
+              type="number"
+              onBlur={(e) => {
+                setDownloadsMin(e.target.value);
+              }}
+              className="outline"
+              placeholder="from"
+            />
+            -
+            <input
+              type="number"
+              onBlur={(e) => {
+                setDownloadsMax(e.target.value);
+              }}
+              className="outline"
+              placeholder="to"
+            />
+          </div>
         </div>
       </div>
 
@@ -125,7 +153,7 @@ export default function Books() {
           className="!overflow-hidden"
           dataLength={results.length}
           next={() => setPageNumber(pageNumber + 1)}
-          hasMore={results.length < count || count === 0}
+          hasMore={results.length < count}
           loader={
             <div className="flex flex-row gap-4 pt-12">
               <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
@@ -148,6 +176,7 @@ export default function Books() {
             </div>
           }
         >
+          {count === 0 ? <span>No books found</span> : ""}
           <div
             className={`lg:px-24 px-4 py-12 grid ${
               results.length > 0

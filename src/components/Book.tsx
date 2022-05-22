@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import clsx from "clsx";
 import { Link } from "react-router-dom";
 
 interface BookProps {
@@ -25,7 +24,7 @@ export default function Book(props: BookProps) {
         >
           <FontAwesomeIcon
             icon={faStar}
-            color={clsx(isFavorite === true ? "#e1ad01" : "")}
+            color={isFavorite === true ? "#e1ad01" : ""}
           />
         </button>
       </div>
