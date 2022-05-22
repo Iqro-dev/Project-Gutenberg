@@ -6,20 +6,24 @@ export function useSearch(
   setResults: React.Dispatch<React.SetStateAction<Results[]>>,
   results: Results[],
   pageNumber: number,
-  setCount: React.Dispatch<React.SetStateAction<number>>
+  setCount: React.Dispatch<React.SetStateAction<number>>,
+  lang: string
 ) {
   const API_LINK = "https://gnikdroy.pythonanywhere.com/api/";
 
   useEffect(() => {
     setResults([]);
-    fetch(API_LINK + `book?&title_contains=${query}&page=${pageNumber}`)
+    fetch(
+      API_LINK +
+        `book?&title_contains=${query}&page=${pageNumber}&languages=${lang}`
+    )
       .then((r) => r.json())
       .then((r: { results: Results[]; count: number }) => {
         setResults([...r.results]);
         setCount(r.count);
         console.log(r.results);
       });
-  }, [query]);
+  }, [query, lang]);
 
   useEffect(() => {
     fetch(API_LINK + `book?&title_contains=${query}&page=${pageNumber}`)

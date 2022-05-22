@@ -15,6 +15,7 @@ export interface Results {
 
 export interface Langs {
   name: string;
+  next: string;
 }
 
 export default function Books() {
@@ -25,27 +26,29 @@ export default function Books() {
   const [state, setState] = useState("");
   const [query, setQuery] = useState("");
   const [langs, setLangs] = useState<Langs[]>([]);
-  const [langsPageNumber, setLangsPageNumber] = useState(1);
-  const [langCount, setLangCount] = useState(0);
+  const [next, setNext] = useState<string | null>("");
+  const [lang, setLang] = useState("");
 
-  useSearch(query, setResults, results, pageNumber, setCount);
+  useSearch(query, setResults, results, pageNumber, setCount, lang);
 
   useEffect(() => {
     fetch(API_LINK + "language")
       .then((r) => r.json())
-      .then((r: { results: Langs[]; count: number }) => {
+      .then((r: { results: Langs[]; next: string }) => {
         setLangs([...r.results]);
-        setLangCount(r.count);
       });
   }, []);
 
   useEffect(() => {
-    fetch(API_LINK + `language?&page=${langsPageNumber}`)
-      .then((r) => r.json())
-      .then((r: { results: Langs[]; count: number }) => {
-        setLangs([...langs, ...r.results]);
-      });
-  }, [setLangsPageNumber]);
+    if (next != null)
+      fetch(next ? next : API_LINK + "language")
+        .then((r) => r.json())
+        .then((r: { results: Langs[]; next: string }) => {
+          setLangs([...langs, ...r.results]);
+          setNext(r.next);
+          console.log(r.next);
+        });
+  }, [next]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setState(e.target.value);
@@ -99,7 +102,7 @@ export default function Books() {
 
           <span>Language:</span>
 
-          <select>
+          <select onChange={(e) => setLang(e.target.value)}>
             {langs &&
               langs.map((lang, index) => (
                 <option key={index}>{lang.name}</option>
