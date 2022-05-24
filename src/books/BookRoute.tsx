@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import BookFiles from "./components/BookFiles";
+import BookPage from "./BookPage";
 
 export interface Results {
   title: string;
@@ -31,7 +31,7 @@ export default function BookRoute() {
   }, [params]);
 
   return (
-    <div className="flex flex-col justify-center items-center pt-24 gap-2 px-24">
+    <div className="flex justify-center h-full">
       {loading ? (
         <div className="flex flex-row gap-4 pt-12">
           <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
@@ -52,14 +52,14 @@ export default function BookRoute() {
           Loading...
         </div>
       ) : (
-        <div>
+        <div className="h-full">
           {results &&
             results.resources.map(
               (resources, index) =>
                 resources.type === "text/html; charset=utf-8" &&
                 resources.uri.slice(-3) !== "zip" && (
-                  <div key={index}>
-                    <BookFiles resources={resources.uri} />
+                  <div key={index} className="h-full">
+                    <BookPage resources={resources.uri} />
                   </div>
                 )
             )}
