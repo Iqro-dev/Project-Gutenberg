@@ -27,7 +27,7 @@ export default function Header() {
     },
   ];
   return (
-    <div className="relative flex justify-between w-full p-4 bg-black gap-12 text-white z-[9999]">
+    <div className="relative flex flex-wrap justify-between w-full p-4 bg-black gap-12 text-white z-[9999]">
       <span className="text-4xl font-['Poppins'] font-semibold">
         <Link to="/">Project Gutenberg</Link>
       </span>

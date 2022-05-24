@@ -25,7 +25,7 @@ export default function SignUp() {
   return (
     <div className="flex flex-col justify-center items-center w-full h-96 gap-6 pt-96">
       <span className="text-4xl font-['Poppins'] font-normal">Sign Up</span>
-      <form className="flex flex-col w-1/5 p-4 gap-8">
+      <form className="flex flex-col xl:w-1/5 p-4 gap-8">
         {inputs.map(({ label, inputType }, index) => (
           <div key={index} className="flex flex-col gap-2">
             <label className="text-sm font-['Poppins'] font-normal">

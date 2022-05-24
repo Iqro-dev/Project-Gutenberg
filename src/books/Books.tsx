@@ -91,7 +91,7 @@ export default function Books() {
           </span>
         </div>
 
-        <div className="flex flex-row flex-wrap gap-2">
+        <div className="flex lg:flex-row flex-col gap-2">
           <div className="flex flex-row gap-2">
             <span>Search:</span>
 
@@ -127,23 +127,26 @@ export default function Books() {
 
           <div className="flex flex-row flex-wrap gap-2">
             <span>Downloads:</span>
-            <input
-              type="number"
-              onBlur={(e) => {
-                setDownloadsMin(e.target.value);
-              }}
-              className="outline"
-              placeholder="from"
-            />
-            -
-            <input
-              type="number"
-              onBlur={(e) => {
-                setDownloadsMax(e.target.value);
-              }}
-              className="outline"
-              placeholder="to"
-            />
+
+            <div className="flex flex-row flex-wrap gap-2">
+              <input
+                type="number"
+                onBlur={(e) => {
+                  setDownloadsMin(e.target.value);
+                }}
+                className="outline"
+                placeholder="from"
+              />
+              -
+              <input
+                type="number"
+                onBlur={(e) => {
+                  setDownloadsMax(e.target.value);
+                }}
+                className="outline"
+                placeholder="to"
+              />
+            </div>
           </div>
         </div>
       </div>

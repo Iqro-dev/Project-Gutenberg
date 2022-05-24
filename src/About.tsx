@@ -1,7 +1,7 @@
 export default function About() {
   return (
-    <div className="flex justify-center w-full gap-4 pt-12">
-      <div className="flex flex-col justify-center items-center w-1/2 gap-4">
+    <div className="flex justify-center w-full gap-4 pt-12 pb-12">
+      <div className="flex flex-col justify-center items-center xl:w-1/2 px-12 gap-8">
         <span className="text-4xl font-['Poppins'] font-normal">
           Welcome to Project Gutenberg
         </span>
@@ -50,12 +50,12 @@ export default function About() {
           are required to enjoy Project Gutenberg eBooks.
         </span>
 
-        <div className="flex flex-col justify-center items-center gap-4">
+        <div className="flex flex-col justify-center items-center gap-4 w-full">
           <span className="text-4xl font-['Poppins'] font-normal">
             Social Media
           </span>
 
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-center justify-center">
             <a
               href="https://www.facebook.com/project.gutenberg"
               className="hover:underline"
@@ -71,11 +71,11 @@ export default function About() {
             </a>
           </div>
 
-          <span className="text-2xl font-['Poppins'] font-normal">
-            News feeds of new eBooks
+          <span className="text-4xl font-['Poppins'] font-normal">
+            New eBooks
           </span>
 
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-center justify-center">
             <a
               href="https://www.facebook.com/gutenberg.new"
               className="hover:underline"
