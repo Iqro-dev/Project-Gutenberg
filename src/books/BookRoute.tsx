@@ -43,6 +43,7 @@ export default function BookRoute() {
               stroke="currentColor"
               strokeWidth="4"
             ></circle>
+
             <path
               className="opacity-75"
               fill="currentColor"

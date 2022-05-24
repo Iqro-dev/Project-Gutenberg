@@ -35,6 +35,7 @@ export default function Book(props: BookProps) {
               ? `${props.title.slice(0, 80)}...`
               : props.title}
           </span>
+
           <span className="text-sm font-['Poppins'] font-normal break-words">
             {!props.description || props.description === ""
               ? "no Description"
@@ -42,15 +43,18 @@ export default function Book(props: BookProps) {
               ? `${props.description.slice(0, 150)}...`
               : props.description}
           </span>
+
           <div className="flex flex-col justify-self-end">
             <span className="text-md font-['Poppins'] font-normal">
               Languages: <span className="text-red-500">{props.languages}</span>
             </span>
+
             <span className="text-md font-['Poppins'] font-normal">
               Downloads:{" "}
               <span className="text-green-500"> {props.downloads}</span>
             </span>
           </div>
+
           <div className="flex">
             <Link
               className="inline-block w-[200px] border rounded-lg border-black text-sm capitalize px-4 py-2 cursor-pointer hover:text-white bg-gradient-to-r bg-no-repeat duration-300 from-black to-black bg-[length:0px] hover:bg-[length:100%]"

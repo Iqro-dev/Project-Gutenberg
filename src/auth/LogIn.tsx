@@ -22,12 +22,14 @@ export default function LogIn() {
   return (
     <div className="flex flex-col justify-center items-center w-full h-96 gap-6 pt-96">
       <span className="text-4xl font-['Poppins'] font-normal">Log In</span>
+
       <form className="flex flex-col xl:w-1/5 p-4 gap-8">
         {inputs.map(({ label, inputType }, index) => (
           <div key={index} className="flex flex-col gap-2">
             <label className="text-sm font-['Poppins'] font-normal">
               {label}
             </label>
+
             <input type={inputType} className="outline rounded-md p-2" />
           </div>
         ))}
