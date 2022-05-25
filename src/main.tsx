@@ -10,26 +10,28 @@ import LogIn from "./auth/LogIn";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "./firebase/firebase";
 import AuthRoute from "./auth/AuthRoute";
+import Layout from "./layouts/layout";
 
 initializeApp(firebaseConfig);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
-    <Header />
     <Routes>
-      <Route path="*" element={<>404</>} />
-      <Route
-        path="/"
-        element={
-          <AuthRoute>
-            <Home />
-          </AuthRoute>
-        }
-      />
-      <Route path="/about" element={<About />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/login" element={<LogIn />} />
-      <Route path="/book/:id" element={<BookRoute />} />
+      <Route element={<Layout />}>
+        <Route path="*" element={<>404</>} />
+        <Route
+          path="/"
+          element={
+            <AuthRoute>
+              <Home />
+            </AuthRoute>
+          }
+        />
+        <Route path="/about" element={<About />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/book/:id" element={<BookRoute />} />
+      </Route>
     </Routes>
   </BrowserRouter>
 );
