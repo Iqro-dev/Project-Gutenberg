@@ -1,8 +1,29 @@
 import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function LogIn() {
+  const auth = getAuth();
+  const navigate = useNavigate();
+  const [authing, setAuthing] = useState(false);
+
+  const signInWithGoogle = async () => {
+    setAuthing(true);
+
+    signInWithPopup(auth, new GoogleAuthProvider())
+      .then((response) => {
+        console.log(response.user.uid);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        setAuthing(false);
+      });
+  };
+
   interface Input {
     label: string;
     inputType: string;
@@ -38,6 +59,10 @@ export default function LogIn() {
           <FontAwesomeIcon icon={faArrowAltCircleRight} size="2x" />
         </button>
       </form>
+
+      <button onClick={() => signInWithGoogle()} disabled={authing}>
+        Sign in with google
+      </button>
 
       <span className="text-md font-['Poppins'] font-normal">
         Want to sign up?

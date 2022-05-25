@@ -15,16 +15,21 @@ initializeApp(firebaseConfig);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
-    <AuthRoute>
-      <Header />
-      <Routes>
-        <Route path="*" element={<>404</>} />
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<LogIn />} />
-        <Route path="/book/:id" element={<BookRoute />} />
-      </Routes>
-    </AuthRoute>
+    <Header />
+    <Routes>
+      <Route path="*" element={<>404</>} />
+      <Route
+        path="/"
+        element={
+          <AuthRoute>
+            <Home />
+          </AuthRoute>
+        }
+      />
+      <Route path="/about" element={<About />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/login" element={<LogIn />} />
+      <Route path="/book/:id" element={<BookRoute />} />
+    </Routes>
   </BrowserRouter>
 );
