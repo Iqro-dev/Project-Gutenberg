@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { faG } from "@fortawesome/free-solid-svg-icons";
 
 export default function LogIn() {
   const auth = getAuth();
@@ -58,11 +59,15 @@ export default function LogIn() {
         <button type="submit">
           <FontAwesomeIcon icon={faArrowAltCircleRight} size="2x" />
         </button>
-      </form>
 
-      <button onClick={() => signInWithGoogle()} disabled={authing}>
-        Sign in with google
-      </button>
+        <button
+          onClick={() => signInWithGoogle()}
+          disabled={authing}
+          className="flex flex-col items-center border rounded-lg border-black text-sm capitalize px-4 py-2 cursor-pointer hover:text-white bg-gradient-to-r bg-no-repeat duration-300 from-black to-black bg-[length:0px] hover:bg-[length:100%]"
+        >
+          <FontAwesomeIcon icon={faG} size="3x" />
+        </button>
+      </form>
 
       <span className="text-md font-['Poppins'] font-normal">
         Want to sign up?
