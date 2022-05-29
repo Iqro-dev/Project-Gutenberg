@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { likeBook } from "./BookFav";
 
 interface BookProps {
   title: string;
@@ -19,7 +20,13 @@ export default function Book(props: BookProps) {
       <div className="flex justify-end p-4">
         <button
           onClick={() => {
-            setIsFavorite(!isFavorite);
+            likeBook(
+              props.title,
+              props.description,
+              props.languages,
+              props.downloads,
+              props.id
+            );
           }}
         >
           <FontAwesomeIcon

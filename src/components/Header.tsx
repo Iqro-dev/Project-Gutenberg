@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 export default function Header() {
@@ -7,19 +7,12 @@ export default function Header() {
 
   const navigate = useNavigate();
 
-  const [authorised, setAuthorised] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    AuthCheck();
-  }, [auth]);
-
-  const AuthCheck = onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setAuthorised(true);
-    } else {
-      console.log("unauthorized");
-      setAuthorised(false);
-    }
+    setIsAuthorized(
+      localStorage.getItem("authorized") === "true" ? true : false
+    );
   });
 
   interface Button {
@@ -52,7 +45,12 @@ export default function Header() {
     {
       path: "/profile",
       label: "Your Profile",
-      styles: "",
+      styles: "transition ease-in-out hover:scale-110 hover:cursor-pointer",
+    },
+    {
+      path: "/about",
+      label: "About",
+      styles: "transition ease-in-out hover:scale-110 hover:cursor-pointer",
     },
   ];
   return (
@@ -62,29 +60,32 @@ export default function Header() {
       </span>
 
       <div className="flex pr-8 items-center text-white gap-6">
-        {authorised === true && (
+        {isAuthorized && (
           <button
             onClick={() => {
               signOut(auth).then(() => {
-                navigate("/");
+                navigate("/login");
+                localStorage.setItem("authorized", "false");
               });
             }}
           >
             Sign out
           </button>
         )}
-        
-        {authorised === false
-          ? nonAuthenticatedButtons.map(({ path, label, styles }, index) => (
-              <div key={index} className={styles}>
-                <Link to={path}>{label}</Link>
-              </div>
-            ))
-          : authenticatedButtons.map(({ path, label, styles }, index) => (
-              <div key={index} className={styles}>
-                <Link to={path}>{label}</Link>
-              </div>
-            ))}
+
+        {!isAuthorized &&
+          nonAuthenticatedButtons.map(({ path, label, styles }, index) => (
+            <div key={index} className={styles}>
+              <Link to={path}>{label}</Link>
+            </div>
+          ))}
+
+        {isAuthorized &&
+          authenticatedButtons.map(({ path, label, styles }, index) => (
+            <div key={index} className={styles}>
+              <Link to={path}>{label}</Link>
+            </div>
+          ))}
       </div>
     </div>
   );
