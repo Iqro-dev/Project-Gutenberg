@@ -45,7 +45,12 @@ export default function Header() {
     {
       path: "/profile",
       label: "Your Profile",
-      styles: "",
+      styles: "transition ease-in-out hover:scale-110 hover:cursor-pointer",
+    },
+    {
+      path: "/about",
+      label: "About",
+      styles: "transition ease-in-out hover:scale-110 hover:cursor-pointer",
     },
   ];
   return (
