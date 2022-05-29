@@ -18,6 +18,7 @@ export default function LogIn() {
       .then((response) => {
         console.log(response.user.uid);
         navigate("/");
+        localStorage.setItem("authorized", "true");
       })
       .catch((error) => {
         console.log(error);

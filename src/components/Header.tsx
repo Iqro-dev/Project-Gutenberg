@@ -10,8 +10,10 @@ export default function Header() {
   const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    setIsAuthorized(auth.currentUser ? true : false);
-  }, [auth.currentUser]);
+    setIsAuthorized(
+      localStorage.getItem("authorized") === "true" ? true : false
+    );
+  });
 
   interface Button {
     path: string;
@@ -57,7 +59,8 @@ export default function Header() {
           <button
             onClick={() => {
               signOut(auth).then(() => {
-                navigate("/");
+                navigate("/login");
+                localStorage.setItem("authorized", "false");
               });
             }}
           >
