@@ -1,9 +1,14 @@
+import { addDoc, collection, deleteDoc, doc, getDoc } from "firebase/firestore";
+import { db } from '../firebase/firebase'
+
 export function likeBook(
   title: string,
   description: string,
-  langauges: string,
+  languages: string,
   downloads: number,
-  id: number
+  id: number,
 ) {
-  console.log(title, description, langauges, downloads, id);
+  const booksCollectionRef = collection(db, "favbooks");
+
+  addDoc(booksCollectionRef, {title, description, languages, downloads, id})
 }

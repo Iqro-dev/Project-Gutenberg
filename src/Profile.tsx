@@ -10,7 +10,7 @@ export default function Profile() {
   useEffect(() => {
     const getFavBooks = async () => {
       const data = await getDocs(booksCollectionRef);
-      setFavbooks(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setFavbooks(data.docs.map((doc) => ({ ...doc.data()})));
     };
 
     getFavBooks();
