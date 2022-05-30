@@ -45,7 +45,8 @@ export default function Header() {
     {
       path: "/profile",
       label: "Your Profile",
-      styles: "transition ease-in-out hover:scale-110 hover:cursor-pointer",
+      styles:
+        "border border-white rounded-md px-4 py-2 transition ease-in-out hover:scale-110 hover:cursor-pointer",
     },
     {
       path: "/about",
@@ -62,6 +63,7 @@ export default function Header() {
       <div className="flex pr-8 items-center text-white gap-6">
         {isAuthorized && (
           <button
+            className="bg-white text-black rounded-md px-4 py-2 transition ease-in-out hover:scale-110 hover:cursor-pointer"
             onClick={() => {
               signOut(auth).then(() => {
                 navigate("/login");
@@ -75,16 +77,16 @@ export default function Header() {
 
         {!isAuthorized &&
           nonAuthenticatedButtons.map(({ path, label, styles }, index) => (
-            <div key={index} className={styles}>
-              <Link to={path}>{label}</Link>
-            </div>
+            <Link to={path} key={index}>
+              <div className={styles}>{label}</div>
+            </Link>
           ))}
 
         {isAuthorized &&
           authenticatedButtons.map(({ path, label, styles }, index) => (
-            <div key={index} className={styles}>
-              <Link to={path}>{label}</Link>
-            </div>
+            <Link to={path} key={index}>
+              <div className={styles}>{label}</div>
+            </Link>
           ))}
       </div>
     </div>

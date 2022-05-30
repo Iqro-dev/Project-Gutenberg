@@ -5,7 +5,6 @@ import { likeBook } from "./BookFav";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
-import { getAuth } from "firebase/auth";
 
 interface BookProps {
   title: string;
@@ -18,7 +17,6 @@ interface BookProps {
 export default function Book(props: BookProps) {
   const [favbooks, setFavbooks] = useState<any>([]);
   const [isLiked, setIsLiked] = useState(false);
-  const auth = getAuth();
   const currentUser = localStorage.getItem("user");
 
   const getFavBooks = async () => {
@@ -46,8 +44,13 @@ export default function Book(props: BookProps) {
           onClick={() => {
             likeBook(props.id);
           }}
+          className="hover:bg-slate-100 p-2 rounded-2xl"
         >
-          <FontAwesomeIcon icon={faHeart} color={isLiked ? "red" : "black"} />
+          <FontAwesomeIcon
+            icon={faHeart}
+            size="2x"
+            className={isLiked ? "text-rose-600" : "text-black"}
+          />
         </button>
       </div>
       <div className="flex flex-col gap-4">

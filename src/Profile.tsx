@@ -28,7 +28,6 @@ export default function Profile() {
       fetch(`${API_LINK}book/${id}`)
         .then((response) => response.json())
         .then((book) => {
-          console.log("a");
           temporaryBooks = [...temporaryBooks, book];
           if (index === favbooks.length - 1) {
             setBooks(temporaryBooks);
