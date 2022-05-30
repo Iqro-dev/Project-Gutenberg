@@ -20,16 +20,20 @@ export default function Profile() {
 
   useEffect(() => {
     getFavBooks();
-    let tmpBooks: any[] = [];
+  }, []);
+
+  useEffect(() => {
+    let temporaryBooks: any[] = [];
     favbooks.map(({ id }: favBook, index: number) => {
       fetch(`${API_LINK}book/${id}`)
         .then((response) => response.json())
         .then((book) => {
-          tmpBooks = [...tmpBooks, book];
+          console.log("a");
+          temporaryBooks = [...temporaryBooks, book];
           if (index === favbooks.length - 1) {
-            setBooks(tmpBooks);
+            setBooks(temporaryBooks);
+            setLoading(false);
           }
-          setLoading(false);
         });
     });
   }, [favbooks]);
