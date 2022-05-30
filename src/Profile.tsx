@@ -8,28 +8,30 @@ export default function Profile() {
   const [favbooks, setFavbooks] = useState<any>([]);
   const API_LINK = "https://gnikdroy.pythonanywhere.com/api/";
   const [books, setBooks] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const getFavBooks = async () => {
+    const data = await getDocs(booksCollectionRef);
+    setFavbooks(data.docs.map((doc) => ({ ...doc.data() })));
+  };
 
   useEffect(() => {
-    const getFavBooks = async () => {
-      const data = await getDocs(booksCollectionRef);
-      setFavbooks(data.docs.map((doc) => ({ ...doc.data() })));
-    };
-
     getFavBooks();
     let tmpBooks: any[] = [];
-
-    favbooks.map((book: favBook, idx: number) => {
-      fetch(API_LINK + "book/" + book.id)
-        .then((r) => r.json())
-        .then((b) => {
-          tmpBooks = [...tmpBooks, b];
-          if (idx === favbooks.length - 1) {
+    setLoading(true);
+    favbooks.map(({ id }: favBook, index: number) => {
+      fetch(`${API_LINK}book/${id}`)
+        .then((response) => response.json())
+        .then((book) => {
+          tmpBooks = [...tmpBooks, book];
+          if (index === favbooks.length - 1) {
             setBooks(tmpBooks);
           }
         });
     });
-  });
 
+    if(books.length > 0) setLoading(false)
+  });
 
   interface favBook {
     title: string;
@@ -52,23 +54,46 @@ export default function Profile() {
       ) : (
         ""
       )}
+
+      {loading && (
+        <div className="flex flex-row gap-4 pt-12">
+          <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+          Loading...
+        </div>
+      )}
+
       <div
         className={`lg:px-24 px-4 py-12 grid ${
-          favbooks.length > 0
-            ? "grid-cols-4 medium:grid-cols-1 medium:w-full"
-            : ""
+          books.length > 0 ? "grid-cols-4 medium:grid-cols-1 medium:w-full" : ""
         } justify-center gap-8`}
-      >{books.map((book, index) => (
-        <div key={index}>
-          <Book 
-            title={book.title}
-            description={book.description}
-            languages={book.languages}
-            downloads={book.downloads}
-            id={book.id}
-          />
-        </div>
-      ))}</div>
+      >
+        {books.map((book, index) => (
+          <div key={index}>
+            <Book
+              title={book.title}
+              description={book.description}
+              languages={book.languages}
+              downloads={book.downloads}
+              id={book.id}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
