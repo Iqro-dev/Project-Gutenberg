@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export interface AuthProps {
   children: JSX.Element;
-}
+} 
 
 const AuthRoute: React.FunctionComponent<AuthProps> = (props) => {
   const { children } = props;

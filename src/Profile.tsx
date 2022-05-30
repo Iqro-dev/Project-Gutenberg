@@ -4,17 +4,32 @@ import Book from "./books/Book";
 import { db } from "./firebase/firebase";
 
 export default function Profile() {
-  const [favbooks, setFavbooks] = useState<any>([]);
   const booksCollectionRef = collection(db, "favbooks");
+  const [favbooks, setFavbooks] = useState<any>([]);
+  const API_LINK = "https://gnikdroy.pythonanywhere.com/api/";
+  const [books, setBooks] = useState<any[]>([]);
 
   useEffect(() => {
     const getFavBooks = async () => {
       const data = await getDocs(booksCollectionRef);
-      setFavbooks(data.docs.map((doc) => ({ ...doc.data()})));
+      setFavbooks(data.docs.map((doc) => ({ ...doc.data() })));
     };
 
     getFavBooks();
-  }, []);
+    let tmpBooks: any[] = [];
+
+    favbooks.map((book: favBook, idx: number) => {
+      fetch(API_LINK + "book/" + book.id)
+        .then((r) => r.json())
+        .then((b) => {
+          tmpBooks = [...tmpBooks, b];
+          if (idx === favbooks.length - 1) {
+            setBooks(tmpBooks);
+          }
+        });
+    });
+  });
+
 
   interface favBook {
     title: string;
@@ -43,21 +58,17 @@ export default function Profile() {
             ? "grid-cols-4 medium:grid-cols-1 medium:w-full"
             : ""
         } justify-center gap-8`}
-      >
-        {favbooks.map((book: favBook, index: number) => {
-          return (
-            <div key={index}>
-              <Book
-                title={book.title}
-                description={book.description}
-                languages={book.languages}
-                downloads={book.downloads}
-                id={book.id}
-              />
-            </div>
-          );
-        })}
-      </div>
+      >{books.map((book, index) => (
+        <div key={index}>
+          <Book 
+            title={book.title}
+            description={book.description}
+            languages={book.languages}
+            downloads={book.downloads}
+            id={book.id}
+          />
+        </div>
+      ))}</div>
     </div>
   );
 }

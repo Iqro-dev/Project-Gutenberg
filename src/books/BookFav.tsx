@@ -1,14 +1,20 @@
-import { addDoc, collection, deleteDoc, doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { db } from '../firebase/firebase'
 
-export function likeBook(
-  title: string,
-  description: string,
-  languages: string,
-  downloads: number,
+export async function likeBook(
   id: number,
 ) {
   const booksCollectionRef = collection(db, "favbooks");
 
-  addDoc(booksCollectionRef, {title, description, languages, downloads, id})
+  const bookQuery = query(booksCollectionRef, where("id", "==", id))
+  const docs = await getDocs(bookQuery)
+  if(!docs.empty) {
+    docs.forEach(d=>{
+      deleteDoc(doc(booksCollectionRef, d.id))
+      alert("Book has been removed from likes")
+    })
+    return
+  }
+  addDoc(booksCollectionRef, {id})
+  alert("Book has been added to likes")
 }

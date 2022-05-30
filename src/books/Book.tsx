@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { likeBook } from "./BookFav";
 
@@ -18,16 +18,13 @@ export default function Book(props: BookProps) {
         <button
           onClick={() => {
             likeBook(
-              props.title,
-              props.description,
-              props.languages,
-              props.downloads,
               props.id,
             );
           }}
         >
           <FontAwesomeIcon
-            icon={faStar}
+            icon={faHeart}
+            color={'red'}
           />
         </button>
       </div>
