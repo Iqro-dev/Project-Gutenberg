@@ -7,7 +7,7 @@ export default function Profile() {
   const [favbooks, setFavbooks] = useState<any>([]);
   const API_LINK = "https://gnikdroy.pythonanywhere.com/api/";
   const [books, setBooks] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const currentUser = localStorage.getItem("user");
 
   const getFavBooks = async () => {

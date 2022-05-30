@@ -21,15 +21,15 @@ export interface Langs {
 export default function Books() {
   const API_LINK = "https://gnikdroy.pythonanywhere.com/api/";
   const [results, setResults] = useState<Results[]>([]);
-  const [count, setCount] = useState(0);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [state, setState] = useState("");
-  const [query, setQuery] = useState("");
+  const [count, setCount] = useState<number>(0);
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [state, setState] = useState<string>("");
+  const [query, setQuery] = useState<string>("");
   const [langs, setLangs] = useState<Langs[]>([]);
   const [next, setNext] = useState<string | null>("");
-  const [lang, setLang] = useState("");
-  const [downloadsMin, setDownloadsMin] = useState("");
-  const [downloadsMax, setDownloadsMax] = useState("");
+  const [lang, setLang] = useState<string>("");
+  const [downloadsMin, setDownloadsMin] = useState<string>("");
+  const [downloadsMax, setDownloadsMax] = useState<string>("");
 
   useSearch(
     query,
@@ -181,6 +181,7 @@ export default function Books() {
           }
         >
           {count === 0 ? <span>No books found</span> : ""}
+
           <div
             className={`lg:px-24 px-4 py-12 grid ${
               results.length > 0

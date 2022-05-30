@@ -19,6 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <Routes>
       <Route element={<Layout />}>
         <Route path="*" element={<>404</>} />
+
         <Route
           path="/"
           element={
@@ -28,9 +29,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           }
         />
         <Route path="/about" element={<About />} />
+
         <Route path="/signup" element={<SignUp />} />
+
         <Route path="/login" element={<LogIn />} />
+
         <Route path="/book/:id" element={<BookRoute />} />
+
         <Route path="/profile" element={<Profile />} />
       </Route>
     </Routes>

@@ -14,7 +14,7 @@ import { faG } from "@fortawesome/free-solid-svg-icons";
 export default function LogIn() {
   const auth = getAuth();
   const navigate = useNavigate();
-  const [authing, setAuthing] = useState(false);
+  const [authing, setAuthing] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<string>("");

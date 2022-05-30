@@ -12,8 +12,7 @@ import { useState } from "react";
 export default function SignUp() {
   const auth = getAuth();
   const navigate = useNavigate();
-  const [authing, setAuthing] = useState(false);
-
+  const [authing, setAuthing] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -45,7 +44,7 @@ export default function SignUp() {
           localStorage.setItem("user", response.user.uid);
         })
         .catch((error) => {
-          setErrors(error.message.slice(5));
+          setErrors(error.code.slice(5));
           setAuthing(false);
         });
     else setErrors("Password do not match");

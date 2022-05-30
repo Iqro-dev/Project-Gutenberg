@@ -4,17 +4,17 @@ import { useNavigate } from "react-router-dom";
 
 export interface AuthProps {
   children: JSX.Element;
-} 
+}
 
 const AuthRoute: React.FunctionComponent<AuthProps> = (props) => {
   const { children } = props;
   const auth = getAuth();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     AuthCheck();
-    return () => AuthCheck()
+    return () => AuthCheck();
   }, [auth]);
 
   const AuthCheck = onAuthStateChanged(auth, (user) => {

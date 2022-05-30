@@ -14,11 +14,10 @@ export interface Results {
 
 export default function BookRoute() {
   const API_LINK = "https://gnikdroy.pythonanywhere.com/api/";
+  const [loading, setLoading] = useState<boolean>(false);
+  const [results, setResults] = useState<Results | null>(null);
 
   const params = useParams();
-
-  const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState<Results | null>(null);
 
   useEffect(() => {
     setLoading(true);

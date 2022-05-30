@@ -4,10 +4,8 @@ import { useEffect, useState } from "react";
 
 export default function Header() {
   const auth = getAuth();
-
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
   const navigate = useNavigate();
-
-  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
     setIsAuthorized(

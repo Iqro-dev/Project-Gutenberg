@@ -16,7 +16,7 @@ interface BookProps {
 
 export default function Book(props: BookProps) {
   const [favbooks, setFavbooks] = useState<any>([]);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
   const currentUser = localStorage.getItem("user");
 
   const getFavBooks = async () => {

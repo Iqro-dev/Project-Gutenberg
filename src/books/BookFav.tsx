@@ -16,7 +16,9 @@ export async function likeBook(id: number) {
     const booksCollectionRef = collection(db, currentUser);
 
     const bookQuery = query(booksCollectionRef, where("id", "==", id));
+
     const docs = await getDocs(bookQuery);
+
     if (!docs.empty) {
       docs.forEach((d) => {
         deleteDoc(doc(booksCollectionRef, d.id));
@@ -27,7 +29,9 @@ export async function likeBook(id: number) {
       });
       return;
     }
+
     addDoc(booksCollectionRef, { id });
+
     alert("Book has been added to likes");
   } else {
     return;
