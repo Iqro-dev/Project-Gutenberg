@@ -23,7 +23,7 @@ export default function LogIn() {
 
     signInWithPopup(auth, new GoogleAuthProvider())
       .then((response) => {
-        console.log(response.user.uid);
+        localStorage.setItem("user", response.user.uid);
         navigate("/");
         localStorage.setItem("authorized", "true");
       })
@@ -38,7 +38,7 @@ export default function LogIn() {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((response) => {
-        console.log(response.user.uid);
+        localStorage.setItem("user", response.user.uid);
         navigate("/");
         localStorage.setItem("authorized", "true");
       })

@@ -23,9 +23,9 @@ export default function SignUp() {
 
     signInWithPopup(auth, new GoogleAuthProvider())
       .then((response) => {
-        console.log(response.user.uid);
         navigate("/");
         localStorage.setItem("authorized", "true");
+        localStorage.setItem("user", response.user.uid);
       })
       .catch((error) => {
         console.log(error);
@@ -39,9 +39,9 @@ export default function SignUp() {
     if (password === confirmPassword)
       createUserWithEmailAndPassword(auth, email, password)
         .then((response) => {
-          console.log(response.user.uid);
           navigate("/");
           localStorage.setItem("authorized", "true");
+          localStorage.setItem("user", response.user.uid);
         })
         .catch((error) => {
           console.log(error);

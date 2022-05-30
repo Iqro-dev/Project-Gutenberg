@@ -19,10 +19,11 @@ export default function Book(props: BookProps) {
   const [favbooks, setFavbooks] = useState<any>([]);
   const [isLiked, setIsLiked] = useState(false);
   const auth = getAuth();
+  const currentUser = localStorage.getItem("user");
 
   const getFavBooks = async () => {
-    if (auth.currentUser !== null) {
-      const booksCollectionRef = collection(db, auth.currentUser.uid);
+    if (currentUser !== null) {
+      const booksCollectionRef = collection(db, currentUser);
       const data = await getDocs(booksCollectionRef);
       setFavbooks(data.docs.map((doc) => ({ ...doc.data() })));
     }

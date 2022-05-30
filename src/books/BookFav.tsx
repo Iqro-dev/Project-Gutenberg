@@ -1,4 +1,3 @@
-import { getAuth } from "firebase/auth";
 import {
   addDoc,
   collection,
@@ -11,10 +10,10 @@ import {
 import { db } from "../firebase/firebase";
 
 export async function likeBook(id: number) {
-  const auth = getAuth();
+  const currentUser = localStorage.getItem("user");
 
-  if (auth.currentUser !== null) {
-    const booksCollectionRef = collection(db, auth.currentUser.uid);
+  if (currentUser !== null) {
+    const booksCollectionRef = collection(db, currentUser);
 
     const bookQuery = query(booksCollectionRef, where("id", "==", id));
     const docs = await getDocs(bookQuery);

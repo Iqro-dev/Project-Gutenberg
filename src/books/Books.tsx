@@ -99,7 +99,7 @@ export default function Books() {
 
             <input
               type="text"
-              onChange={(e) => {
+              onBlur={(e) => {
                 setQuery(e.target.value);
                 setState(e.target.value);
               }}
