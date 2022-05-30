@@ -17,6 +17,7 @@ export default function SignUp() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [errors, setErrors] = useState<string>("");
 
   const signInWithGoogle = async () => {
     setAuthing(true);
@@ -28,7 +29,7 @@ export default function SignUp() {
         localStorage.setItem("user", response.user.uid);
       })
       .catch((error) => {
-        console.log(error);
+        setErrors(error.code.slice(5));
         setAuthing(false);
       });
   };
@@ -44,14 +45,17 @@ export default function SignUp() {
           localStorage.setItem("user", response.user.uid);
         })
         .catch((error) => {
-          console.log(error);
+          setErrors(error.message.slice(5));
           setAuthing(false);
         });
+    else setErrors("Password do not match");
   };
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full pt-12 gap-6 pb-96">
       <span className="text-4xl font-['Poppins'] font-normal">Sign Up</span>
+
+      <div>{errors && <span>{errors}</span>}</div>
 
       <form className="flex flex-col xl:w-1/5 p-4 gap-8">
         <div className="flex flex-col gap-2">
