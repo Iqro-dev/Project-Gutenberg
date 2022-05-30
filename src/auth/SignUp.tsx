@@ -114,10 +114,6 @@ export default function SignUp() {
         <button className="text-xl font-['Poppins'] font-semibold outline px-4 py-2 rounded-md">
           <Link to="/login">Login</Link>
         </button>
-
-        <button className="text-xl font-['Poppins'] font-semibold outline px-4 py-2 rounded-md">
-          <Link to="/">Go Back</Link>
-        </button>
       </div>
     </div>
   );

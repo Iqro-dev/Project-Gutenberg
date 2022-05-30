@@ -8,7 +8,7 @@ export default function Profile() {
   const [favbooks, setFavbooks] = useState<any>([]);
   const API_LINK = "https://gnikdroy.pythonanywhere.com/api/";
   const [books, setBooks] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getFavBooks = async () => {
     const data = await getDocs(booksCollectionRef);
@@ -18,7 +18,6 @@ export default function Profile() {
   useEffect(() => {
     getFavBooks();
     let tmpBooks: any[] = [];
-    setLoading(true);
     favbooks.map(({ id }: favBook, index: number) => {
       fetch(`${API_LINK}book/${id}`)
         .then((response) => response.json())
@@ -27,11 +26,10 @@ export default function Profile() {
           if (index === favbooks.length - 1) {
             setBooks(tmpBooks);
           }
+          setLoading(false);
         });
     });
-
-    if(books.length > 0) setLoading(false)
-  });
+  }, [favbooks]);
 
   interface favBook {
     title: string;
@@ -45,6 +43,10 @@ export default function Profile() {
     <div className="flex flex-col justify-center items-center pt-24">
       <span className="text-4xl font-['Poppins'] font-normal">
         Your favorite books
+      </span>
+
+      <span className="text-lg font-['Poppins'] font-normal">
+        Books: {favbooks.length}
       </span>
 
       {favbooks.length === 0 ? (

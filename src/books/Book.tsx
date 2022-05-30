@@ -2,6 +2,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { likeBook } from "./BookFav";
+import { collection, getDocs } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { db } from "../firebase/firebase";
 
 interface BookProps {
   title: string;
@@ -12,20 +15,35 @@ interface BookProps {
 }
 
 export default function Book(props: BookProps) {
+  const [favbooks, setFavbooks] = useState<any>([]);
+  const [isLiked, setIsLiked] = useState(false);
+
+  const booksCollectionRef = collection(db, "favbooks");
+
+  const getFavBooks = async () => {
+    const data = await getDocs(booksCollectionRef);
+    setFavbooks(data.docs.map((doc) => ({ ...doc.data() })));
+  };
+
+  useEffect(() => {
+    getFavBooks();
+
+    {
+      favbooks.forEach((book: { id: number }) => {
+        if (props.id === book.id) setIsLiked(true);
+      });
+    }
+  });
+
   return (
     <div className="md:w-[80vw] 2xl:w-full h-[25vw] medium:h-full shadow-xl rounded-xl transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:cursor-pointer medium:pb-12">
       <div className="flex justify-end p-4">
         <button
           onClick={() => {
-            likeBook(
-              props.id,
-            );
+            likeBook(props.id);
           }}
         >
-          <FontAwesomeIcon
-            icon={faHeart}
-            color={'red'}
-          />
+          <FontAwesomeIcon icon={faHeart} color={isLiked ? "red" : "black"} />
         </button>
       </div>
       <div className="flex flex-col gap-4">
