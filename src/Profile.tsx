@@ -66,7 +66,7 @@ export default function Profile() {
         ""
       )}
 
-      {loading && (
+      {favbooks.length > 0 && loading && (
         <div className="flex flex-row gap-4 pt-12">
           <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
             <circle
