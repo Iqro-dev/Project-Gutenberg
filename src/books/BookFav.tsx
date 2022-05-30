@@ -1,3 +1,4 @@
+import { getAuth } from "firebase/auth";
 import {
   addDoc,
   collection,
@@ -10,20 +11,26 @@ import {
 import { db } from "../firebase/firebase";
 
 export async function likeBook(id: number) {
-  const booksCollectionRef = collection(db, "favbooks");
+  const auth = getAuth();
 
-  const bookQuery = query(booksCollectionRef, where("id", "==", id));
-  const docs = await getDocs(bookQuery);
-  if (!docs.empty) {
-    docs.forEach((d) => {
-      deleteDoc(doc(booksCollectionRef, d.id));
-      alert("Book has been removed from likes");
-      setTimeout(() => {
-        location.reload();
-      }, 1000);
-    });
+  if (auth.currentUser !== null) {
+    const booksCollectionRef = collection(db, auth.currentUser.uid);
+
+    const bookQuery = query(booksCollectionRef, where("id", "==", id));
+    const docs = await getDocs(bookQuery);
+    if (!docs.empty) {
+      docs.forEach((d) => {
+        deleteDoc(doc(booksCollectionRef, d.id));
+        alert("Book has been removed from likes");
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      });
+      return;
+    }
+    addDoc(booksCollectionRef, { id });
+    alert("Book has been added to likes");
+  } else {
     return;
   }
-  addDoc(booksCollectionRef, { id });
-  alert("Book has been added to likes");
 }

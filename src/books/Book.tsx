@@ -5,6 +5,7 @@ import { likeBook } from "./BookFav";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
+import { getAuth } from "firebase/auth";
 
 interface BookProps {
   title: string;
@@ -17,12 +18,14 @@ interface BookProps {
 export default function Book(props: BookProps) {
   const [favbooks, setFavbooks] = useState<any>([]);
   const [isLiked, setIsLiked] = useState(false);
-
-  const booksCollectionRef = collection(db, "favbooks");
+  const auth = getAuth();
 
   const getFavBooks = async () => {
-    const data = await getDocs(booksCollectionRef);
-    setFavbooks(data.docs.map((doc) => ({ ...doc.data() })));
+    if (auth.currentUser !== null) {
+      const booksCollectionRef = collection(db, auth.currentUser.uid);
+      const data = await getDocs(booksCollectionRef);
+      setFavbooks(data.docs.map((doc) => ({ ...doc.data() })));
+    }
   };
 
   useEffect(() => {
@@ -36,7 +39,7 @@ export default function Book(props: BookProps) {
   });
 
   return (
-    <div className="md:w-[80vw] 2xl:w-full h-[25vw] medium:h-full shadow-xl rounded-xl transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:cursor-pointer medium:pb-12">
+    <div className="w-full h-[25vw] medium:h-full shadow-xl rounded-xl transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:cursor-pointer medium:pb-12">
       <div className="flex justify-end p-4">
         <button
           onClick={() => {

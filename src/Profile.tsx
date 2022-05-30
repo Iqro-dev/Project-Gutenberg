@@ -1,18 +1,22 @@
+import { getAuth } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Book from "./books/Book";
 import { db } from "./firebase/firebase";
 
 export default function Profile() {
-  const booksCollectionRef = collection(db, "favbooks");
+  const auth = getAuth();
   const [favbooks, setFavbooks] = useState<any>([]);
   const API_LINK = "https://gnikdroy.pythonanywhere.com/api/";
   const [books, setBooks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const getFavBooks = async () => {
-    const data = await getDocs(booksCollectionRef);
-    setFavbooks(data.docs.map((doc) => ({ ...doc.data() })));
+    if (auth.currentUser !== null) {
+      const booksCollectionRef = collection(db, auth.currentUser.uid);
+      const data = await getDocs(booksCollectionRef);
+      setFavbooks(data.docs.map((doc) => ({ ...doc.data() })));
+    }
   };
 
   useEffect(() => {
