@@ -28,11 +28,14 @@ export default function Profile() {
       fetch(`${API_LINK}book/${id}`)
         .then((response) => response.json())
         .then((book) => {
-          temporaryBooks = [...temporaryBooks, book];
-          if (index === favbooks.length - 1) {
-            setBooks(temporaryBooks);
-            setLoading(false);
-          }
+          console.log("a");
+          temporaryBooks.push(book);
+          setTimeout(() => {
+            if (index === favbooks.length - 1) {
+              setBooks(temporaryBooks);
+              setLoading(false);
+            }
+          }, 500);
         });
     });
   }, [favbooks]);
